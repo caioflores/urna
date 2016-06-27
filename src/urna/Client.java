@@ -16,14 +16,26 @@ public class Client {
         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
         
+        System.out.println("Escolha sua opcao:");
+        System.out.println("1 - Votar");
+        System.out.println("2 - Votar branco");
+        System.out.println("3 - Votar nulo");
+        System.out.println("4 - Carregar candidatos");
+        System.out.println("5 - Finalizar as votações da urna e enviar ao servidor");
+        
         ReadMessage reader = new ReadMessage(input);
         Thread t = new Thread(reader);
         t.start();
         
         Scanner scanner = new Scanner(System.in);
         String line = "";
-        while(!(line = scanner.nextLine()).equals("exit")) {
-            output.writeObject(line);
+        while(!(line = scanner.nextLine()).equals("5")) {
+            if(line.equals("1")) { 
+            	System.out.println("Qual o seu candidato?"); 
+            	line = scanner.nextLine();
+            }
+            
+        	output.writeObject(line);
         }
         scanner.close();
         input.close();
