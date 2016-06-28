@@ -5,11 +5,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Client {
-    /**
-     * @param args the command line arguments
-     */
+	
+	private Vector<Candidato> candidatos = new Vector<Candidato>();
+	
+	public Client(Vector<Candidato> candidatos){
+		this.candidatos = candidatos;
+	}
+	
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Socket socket = new Socket("127.0.0.1", 1234);
         

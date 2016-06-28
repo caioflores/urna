@@ -27,7 +27,7 @@ public class FwdMessage implements Runnable {
                 String msg = (String)input.readObject();
                 
                 for(FwdMessage c : clients) {
-                    if(c != this) {
+                    if(c == this) {
                         c.sendMessage(msg);
                     }
                 }

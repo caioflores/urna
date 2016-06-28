@@ -18,6 +18,10 @@ public class Server {
         
         ServerSocket server = new ServerSocket(1234, 10);
         
+        candidatos.add(new Candidato(10, "José Augusto", "PT", 0));
+        candidatos.add(new Candidato(20, "Matheus da Silva", "PSDB", 0));
+        candidatos.add(new Candidato(30, "Wedsnelson Santos", "PSol", 0));
+        candidatos.add(new Candidato(40, "Lurdez Menezes", "PMDB", 0));
         
 
         while (true) {
@@ -29,15 +33,12 @@ public class Server {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
             String msg = (String)input.readObject();
-            
-            if(msg.equals("2")) { // Branco
-            	
-            }else if(msg.equals("3")) { // Nulo
-            	
-            }else if(msg.equals("4")){ // Candidatos
+             
+            if(msg.equals("4")){ // Candidatos
             	
             }else if(msg.equals("5")){ // Finalizar
-            	
+            	Candidato teste = candidatos.get(0);
+            	output.writeObject(candidatos.get(0));
             }
             
             FwdMessage client = new FwdMessage(output, input, clients);

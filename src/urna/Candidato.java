@@ -4,7 +4,7 @@ public class Candidato {
 	private int codigo_votacao;
 	private String nome_candidato;
 	private String partido;
-	private int num_votos;
+	private Integer num_votos;
 	
 	public Candidato(int codigo_votacao, String nome_cadidato, String partido, int num_votos){
 		this.codigo_votacao = codigo_votacao;
@@ -37,5 +37,14 @@ public class Candidato {
 	public void setNum_votos(int num_votos) {
 		this.num_votos = num_votos;
 	}
+	
+	public String toString(){
+		String data = new String();
+		data = "Candidato: " + this.nome_candidato + "\n";
+		data += "Partido: " + this.partido + "\n";
+		data += this.num_votos.toString() + "\n";
+		return data;
+	}
+	
 	
 }
