@@ -16,9 +16,9 @@ public class Server {
         Vector<FwdMessage> clients = new Vector<FwdMessage>();
         Vector<Candidato> candidatos = new Vector<Candidato>();
         
-        ServerSocket server = new ServerSocket(1234, 10);
+        ServerSocket server = new ServerSocket(3333, 10);
         
-        candidatos.add(new Candidato(10, "José Augusto", "PT", 0));
+        candidatos.add(new Candidato(10, "Jose Augusto", "PT", 0));
         candidatos.add(new Candidato(20, "Matheus da Silva", "PSDB", 0));
         candidatos.add(new Candidato(30, "Nelson Santos", "PSol", 0));
         candidatos.add(new Candidato(40, "Lurdez Menezes", "PMDB", 0));    
@@ -32,12 +32,14 @@ public class Server {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
             String msg = (String)input.readObject();
-             
+           
             if(msg.equals("4")){ // Candidatos
-            	output.writeObject(candidatos);
+            	for(int i = 0; i < candidatos.size(); i++){
+            		msg += candidatos.get(i);
+            	}
+            	output.writeObject(msg);
             } else if(msg.equals("5")){ // Finalizar
-            	//Candidato teste = candidatos.get(0);
-            	output.writeObject(candidatos);
+
             }
             
             FwdMessage client = new FwdMessage(output, input, clients);
