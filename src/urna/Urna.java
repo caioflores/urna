@@ -9,11 +9,15 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Urna {
-	private boolean candidato_flag = false;
-	private boolean voto_flag = false;
+	private boolean candidato_flag = false;	// Recuperou lista de candidatos?
+	private boolean voto_flag = false; 		// Urna tem ao menos um voto?
 	private Vector<Candidato> candidatos = new Vector<Candidato>();
 	private int brancos = 0;
 	private int nulos = 0;
+	
+	public void clearConsole() {
+		System.out.print("\033[H\033[2J");
+	}
 	
     public static void main(String[] args) throws ClassNotFoundException, IOException {
     	new Urna();
@@ -52,24 +56,29 @@ public class Urna {
             	} 
             	// Se nao tiver carregado os candidatos ainda
             	else {
+            		this.clearConsole();
             		System.out.println("Primeiro carregue os candidatos digitando 4!\n");
             	}
-            
+            	
+            	this.clearConsole();
             	System.out.println("Voto realizado com sucesso!");
         	} 
         	// Votar branco
         	else if(line.equals("2")){
             	this.brancos++;
+            	this.clearConsole();
             	System.out.println("Voto realizado com sucesso!");
             	
             } 
         	// Votar nulo
         	else if(line.equals("3")){
             	this.nulos++;
+            	this.clearConsole();
             	System.out.println("Voto realizado com sucesso!");
             } 
         	// Pegar candidatos do servidor
         	else if(line.equals("4")){
+        		this.clearConsole();
             	
             	Socket socket = new Socket("cosmos.lasdpc.icmc.usp.br", 40004);
                 
@@ -125,9 +134,11 @@ public class Urna {
 	                this.brancos = 0;
 	                this.nulos = 0;
         		} else {
+        			this.clearConsole();
         			System.out.println("Vote em pelo menos um candidato!\n");
         		}
         		
+        		this.clearConsole();
         		System.out.println("Urna contabilizada com sucesso!");
             }
             this.printMenu();
