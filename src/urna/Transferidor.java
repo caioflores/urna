@@ -6,13 +6,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class FwdMessage implements Runnable {
+public class Transferidor implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private Server server;
-	private String msg_out;
+    private Servidor server;
 
-    public FwdMessage(ObjectOutputStream output, ObjectInputStream input, Server server) {
+    public Transferidor(ObjectOutputStream output, ObjectInputStream input, Servidor server) {
         this.output = output;
         this.input = input;
         this.server = server;
@@ -24,35 +23,39 @@ public class FwdMessage implements Runnable {
     
     @Override
     public void run() {
-    	System.out.println("OLAR");
         while(true) {
             try {
                 String msg = (String)input.readObject();
-                System.out.println("OLAR2");
-                
-                msg_out = new String();
-                
-                if(msg.equals("999")){
-                	
-                	for(int i = 0; i < this.server.getCandidatosSize(); i++){
-                		msg_out += this.server.getCandidato(i).toString();
-                	}
+                int num;
+
+                if(msg.equals("999")){	
+                	this.sendMessage(this.server.getCandidatos());
                 } else if(msg.equals("888")){
+                	@SuppressWarnings("unchecked")
+					Vector<Candidato> candidatos_aux = (Vector<Candidato>)input.readObject();
+                	for(int i = 0; i < candidatos_aux.size(); i++){
+                		this.server.getCandidato(i).setNum_votos(this.server.getCandidato(i).getNum_votos() + candidatos_aux.get(i).getNum_votos());
+                	}
+                	num = (int)input.readObject();
+                	this.server.setBrancos(num);
+                	
+                	num = (int)input.readObject();
+                	this.server.setNulos(num);
                 	
                 }
-                this.sendMessage(msg_out);
+
                 
             } catch (IOException ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
                 try {
                     input.close();
                     output.close();
                 } catch (IOException ex1) {
-                    ex1.printStackTrace();
+                    //ex1.printStackTrace();
                 }
                 break;
             } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
             	break;
             }
         }

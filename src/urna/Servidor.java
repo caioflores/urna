@@ -7,26 +7,45 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
-public class Server {
+public class Servidor {
+
     private Vector<Candidato> candidatos = new Vector<Candidato>();
-    /**
+    private int brancos = 0;
+    private int nulos = 0;
+    public int getBrancos() {
+		return brancos;
+	}
+
+	public void setBrancos(int brancos) {
+		this.brancos = brancos;
+	}
+
+	public int getNulos() {
+		return nulos;
+	}
+
+	public void setNulos(int nulos) {
+		this.nulos = nulos;
+	}
+
+	/**
      * @param args the command line arguments
      * @throws ClassNotFoundException 
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        new Server();
+        new Servidor();
     	
     }
     
-    public Server() throws IOException, ClassNotFoundException{
+    public Servidor() throws IOException, ClassNotFoundException{
     	
         
         ServerSocket server = new ServerSocket(3333, 10);
         
-        candidatos.add(new Candidato(10, "Jose Augusto", "PT", 0));
-        candidatos.add(new Candidato(20, "Matheus da Silva", "PSDB", 0));
-        candidatos.add(new Candidato(30, "Nelson Santos", "PSol", 0));
-        candidatos.add(new Candidato(40, "Lurdez Menezes", "PMDB", 0));    
+        candidatos.add(new Candidato(0, "Jose Augusto", "PT", 0));
+        candidatos.add(new Candidato(1, "Matheus da Silva", "PSDB", 0));
+        candidatos.add(new Candidato(2, "Nelson Santos", "PSol", 0));
+        candidatos.add(new Candidato(3, "Lurdez Menezes", "PMDB", 0));    
 
         while (true) {
             System.out.println("Aguardando conexoes...");
@@ -35,15 +54,14 @@ public class Server {
 
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-
-            String msg = (String)input.readObject();
             
-            FwdMessage client = new FwdMessage(output, input, this);
+            Transferidor client = new Transferidor(output, input, this);
             
             Thread t = new Thread(client);
             t.start();
 
         }
+  
     }
     
     public Candidato getCandidato(int i) {
@@ -52,5 +70,9 @@ public class Server {
     
     public int getCandidatosSize() {
     	return this.candidatos.size();
+    }
+    
+    public Vector<Candidato> getCandidatos(){
+    	return this.candidatos;
     }
 }
