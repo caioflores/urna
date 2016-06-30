@@ -40,7 +40,7 @@ public class Servidor {
     public Servidor() throws IOException, ClassNotFoundException{
     	
         
-        ServerSocket server = new ServerSocket(3333, 10);
+        ServerSocket server = new ServerSocket(40004, 10);
         
         candidatos.add(new Candidato(0, "Jose Augusto", "PT", 0));
         candidatos.add(new Candidato(1, "Matheus da Silva", "PSDB", 0));
