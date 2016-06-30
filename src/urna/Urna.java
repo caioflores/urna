@@ -112,7 +112,7 @@ public class Urna {
         	else if(line.equals("4")){
         		this.clearConsole();
             	
-            	Socket socket = new Socket("localhost", 3333);
+            	Socket socket = new Socket("cosmos.lasdpc.icmc.usp.br", 40004);
                 
                 ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
@@ -148,7 +148,7 @@ public class Urna {
         	// Atualizar servidor com votos dessa urna
         	else if(line.equals("5")){
         		if(this.candidato_flag == true){
-	            	Socket socket = new Socket("localhost", 3333);
+	            	Socket socket = new Socket("cosmos.lasdpc.icmc.usp.br", 40004);
 	                
 	                ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
 	                ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
