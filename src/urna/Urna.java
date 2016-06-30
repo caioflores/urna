@@ -9,11 +9,33 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Urna {
-	private boolean candidato_flag = false;
-	private boolean voto_flag = false;
+	private boolean candidato_flag = false;	// Recuperou lista de candidatos?
+	private boolean voto_flag = false; 		// Urna tem ao menos um voto?
 	private Vector<Candidato> candidatos = new Vector<Candidato>();
 	private int brancos = 0;
 	private int nulos = 0;
+	private Scanner kb;
+	private String line;
+	
+	public void clearConsole() {
+	    try
+	    {
+	        final String os = System.getProperty("os.name");
+
+	        if (os.contains("Windows"))
+	        {
+	            Runtime.getRuntime().exec("cls");
+	        }
+	        else
+	        {
+	            Runtime.getRuntime().exec("clear");
+	        }
+	    }
+	    catch (final Exception e)
+	    {
+	        //  Handle any exceptions.
+	    }
+	}
 	
     public static void main(String[] args) throws ClassNotFoundException, IOException {
     	new Urna();
@@ -33,8 +55,20 @@ public class Urna {
         output.writeObject(msg);
     }
     
+    public void waitForCont()
+    {
+    	System.out.println("\nPressione enter para continuar...");
+    	try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    } 
+    
     @SuppressWarnings("unchecked")
 	public Urna() throws IOException, ClassNotFoundException {
+
     	this.printMenu();
     	Scanner scanner = new Scanner(System.in);
         String line = "";
@@ -49,27 +83,34 @@ public class Urna {
                 	
                 	// agora tem pelo menos um voto
                 	this.voto_flag = true;
+                	
+                	this.clearConsole();
+                	System.out.println("Voto realizado com sucesso!");
             	} 
             	// Se nao tiver carregado os candidatos ainda
             	else {
+            		this.clearConsole();
             		System.out.println("Primeiro carregue os candidatos digitando 4!\n");
             	}
-            
-            	System.out.println("Voto realizado com sucesso!");
+            	
+            	
         	} 
         	// Votar branco
         	else if(line.equals("2")){
             	this.brancos++;
+            	this.clearConsole();
             	System.out.println("Voto realizado com sucesso!");
             	
             } 
         	// Votar nulo
         	else if(line.equals("3")){
             	this.nulos++;
+            	this.clearConsole();
             	System.out.println("Voto realizado com sucesso!");
             } 
         	// Pegar candidatos do servidor
         	else if(line.equals("4")){
+        		this.clearConsole();
             	
             	Socket socket = new Socket("localhost", 3333);
                 
@@ -129,12 +170,16 @@ public class Urna {
 
 	                this.brancos = 0;
 	                this.nulos = 0;
+	                
+	        		this.clearConsole();
+	        		System.out.println("Urna contabilizada com sucesso!");
         		} else {
+        			this.clearConsole();
         			System.out.println("Vote em pelo menos um candidato!\n");
         		}
         		
-        		System.out.println("Urna contabilizada com sucesso!");
             }
+        	waitForCont();
             this.printMenu();
         	
         }

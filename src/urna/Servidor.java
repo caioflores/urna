@@ -39,7 +39,7 @@ public class Servidor {
     
     public Servidor() throws IOException, ClassNotFoundException{
     	
-        
+        // Porta 40004, 10 conexoes
         ServerSocket server = new ServerSocket(3333, 10);
         
         candidatos.add(new Candidato(0, "Jose Augusto", "PT"));
