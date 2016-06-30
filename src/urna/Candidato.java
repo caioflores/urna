@@ -15,6 +15,10 @@ public class Candidato implements Serializable {
 	public void setNum_votos(int num_votos) {
 		this.num_votos = num_votos;
 	}
+	
+	public void sumNum_votos(int num_votos) {
+		this.num_votos += num_votos;
+	}
 
 	public int getNum_votos() {
 		return num_votos;
@@ -24,11 +28,11 @@ public class Candidato implements Serializable {
 		this.num_votos++;
 	}
 
-	public Candidato(int codigo_votacao, String nome_candidato, String partido, int num_votos){
+	public Candidato(int codigo_votacao, String nome_candidato, String partido){
 		this.codigo_votacao = codigo_votacao;
 		this.nome_candidato = nome_candidato;
 		this.partido = partido;
-		this.num_votos = num_votos;
+		this.num_votos = 0;
 	}
 	
 	public String toString(){

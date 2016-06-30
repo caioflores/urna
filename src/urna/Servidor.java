@@ -40,12 +40,12 @@ public class Servidor {
     public Servidor() throws IOException, ClassNotFoundException{
     	
         
-        ServerSocket server = new ServerSocket(40004, 10);
+        ServerSocket server = new ServerSocket(3333, 10);
         
-        candidatos.add(new Candidato(0, "Jose Augusto", "PT", 0));
-        candidatos.add(new Candidato(1, "Matheus da Silva", "PSDB", 0));
-        candidatos.add(new Candidato(2, "Nelson Santos", "PSol", 0));
-        candidatos.add(new Candidato(3, "Lurdez Menezes", "PMDB", 0));    
+        candidatos.add(new Candidato(0, "Jose Augusto", "PT"));
+        candidatos.add(new Candidato(1, "Matheus da Silva", "PSDB"));
+        candidatos.add(new Candidato(2, "Nelson Santos", "PSol"));
+        candidatos.add(new Candidato(3, "Lurdez Menezes", "PMDB"));    
 
         while (true) {
             System.out.println("Aguardando conexoes...");

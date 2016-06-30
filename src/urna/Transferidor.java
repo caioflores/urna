@@ -34,7 +34,7 @@ public class Transferidor implements Runnable {
                 	@SuppressWarnings("unchecked")
 					Vector<Candidato> candidatos_aux = (Vector<Candidato>)input.readObject();
                 	for(int i = 0; i < candidatos_aux.size(); i++){
-                		this.server.getCandidato(i).setNum_votos(this.server.getCandidato(i).getNum_votos() + candidatos_aux.get(i).getNum_votos());
+                		this.server.getCandidato(i).sumNum_votos(candidatos_aux.get(i).getNum_votos());
                 	}
                 	num = (int)input.readObject();
                 	this.server.setBrancos(num);

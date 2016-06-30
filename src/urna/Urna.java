@@ -71,7 +71,7 @@ public class Urna {
         	// Pegar candidatos do servidor
         	else if(line.equals("4")){
             	
-            	Socket socket = new Socket("cosmos.lasdpc.icmc.usp.br", 40004);
+            	Socket socket = new Socket("localhost", 3333);
                 
                 ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
@@ -82,7 +82,12 @@ public class Urna {
                     try {
                         this.candidatos = (Vector<Candidato>)input.readObject();
                         for(int i = 0; i < this.candidatos.size(); i++){
+                        	
+                        	// Imprime os dados e as parciais do candidato
                         	System.out.println(this.candidatos.get(i).toString());
+                        	
+                        	// Zera o numero de votos para contabilizar os votos soh dessa urna
+                        	this.candidatos.get(i).setNum_votos(0);
                         }
                         break;
                     } catch (IOException | ClassNotFoundException ex) {
@@ -102,7 +107,7 @@ public class Urna {
         	// Atualizar servidor com votos dessa urna
         	else if(line.equals("5")){
         		if(this.candidato_flag == true){
-	            	Socket socket = new Socket("cosmos.lasdpc.icmc.usp.br", 40004);
+	            	Socket socket = new Socket("localhost", 3333);
 	                
 	                ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
 	                ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
@@ -121,7 +126,7 @@ public class Urna {
 	                for(int i = 0; i < this.candidatos.size(); i++){
 	                	this.candidatos.get(i).setNum_votos(0);
 	                }
-	                
+
 	                this.brancos = 0;
 	                this.nulos = 0;
         		} else {
