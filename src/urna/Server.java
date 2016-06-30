@@ -8,13 +8,18 @@ import java.net.Socket;
 import java.util.Vector;
 
 public class Server {
+    private Vector<Candidato> candidatos = new Vector<Candidato>();
     /**
      * @param args the command line arguments
      * @throws ClassNotFoundException 
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Vector<FwdMessage> clients = new Vector<FwdMessage>();
-        Vector<Candidato> candidatos = new Vector<Candidato>();
+        new Server();
+    	
+    }
+    
+    public Server() throws IOException, ClassNotFoundException{
+    	
         
         ServerSocket server = new ServerSocket(3333, 10);
         
@@ -32,22 +37,20 @@ public class Server {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
             String msg = (String)input.readObject();
-           
-            if(msg.equals("4")){ // Candidatos
-            	for(int i = 0; i < candidatos.size(); i++){
-            		msg += candidatos.get(i);
-            	}
-            	output.writeObject(msg);
-            } else if(msg.equals("5")){ // Finalizar
-
-            }
             
-            FwdMessage client = new FwdMessage(output, input, clients);
-            clients.add(client);
+            FwdMessage client = new FwdMessage(output, input, this);
             
             Thread t = new Thread(client);
             t.start();
 
         }
+    }
+    
+    public Candidato getCandidato(int i) {
+    	return this.candidatos.get(i);
+    }
+    
+    public int getCandidatosSize() {
+    	return this.candidatos.size();
     }
 }
